@@ -6,8 +6,9 @@ import base64
 import sys
 # Perso
 sys.path.append('/home/the-freeman/Scripts/Reco')
+sys.path.append('/home/the-freeman/Scripts/')
 from File import file_library as file_lib
-
+from Manip_Data import manip_data_lib as mdata_lib
 
 #################################################################################
 #                                                                               #
@@ -63,7 +64,7 @@ def text_byte_xor(ciphertext, plaintext_key):
 
     # XOR two byte strings
     xor_byte = bytes([_a ^ _b for _a, _b in zip(ba1, ba2)])
-    xor_string = byte_to_str(xor_byte)
+    xor_string = mdata_lib.sanitize_byte(xor_byte)
     xor_string = ''.join(xor_string)
 
     return xor_string
@@ -91,7 +92,7 @@ def hex_byte_xor(hex_cipher, plaintext_key):
     xor_bytes = bytes([_a ^ _b for _a, _b in zip(ba1, ba2)])
 
     # print(xor_bytes)
-    xor_string = byte_to_str(xor_bytes)
+    xor_string = mdata_lib.sanitize_byte(xor_bytes)
 
     xor_string = ''.join(xor_string)
     # print(xor_string)
@@ -104,19 +105,6 @@ def hex_byte_xor(hex_cipher, plaintext_key):
 
     return xor_string
 
-# Transform bytes into ASCII
-def byte_to_str(byte_data):
-    ## Variables
-    data_string = []
-
-    # Print ASCII characters of the XORed hex
-    for byte in byte_data:
-        if byte < 32 or byte > 126:
-            data_string.append('.')
-        else:
-            data_string.append(chr(byte))
-
-    return data_string
 
 ### Main ###
 if __name__ == '__main__':
@@ -136,13 +124,14 @@ if __name__ == '__main__':
     # incremental_XOR('10001000100111111000110110100111101011101010101010111001101001011011000010011110101010011011111010100101101111111011111010010100101110011111101110101000101000001111111010110110')
 
     # Decode the cipher-text to a byte string and make the plaintext a byte string
-    for index_key in range(1, 256):
-        key = hex_byte_xor(cipher, index_key)
+    # for index_key in range(1, 256):
+    #     key = hex_byte_xor(cipher, index_key)
+    #
+    #     print(str(index_key) + ': ' + key)
 
-        print(str(index_key) + ': ' + key)
-        # print(type(key.decode()))
+    print(text_byte_xor('B/<V5;)j}j6\\<Y)8><\\9Fbu,Hy4ONC}pxP"4st12wn`?@O$6BgQo7i#gtD|s>3lf=', 126))
 
-    # print(hex_byte_xor(cipher, 203))
+
 
 
 
