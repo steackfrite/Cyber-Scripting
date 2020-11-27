@@ -15,17 +15,21 @@ def rot47(encoded_str, index_rot):
         # print(j)
         if j >= 33 and j <= 126:
             decoded_str.append(chr(33 + ((j + index_rot) % 94)))
+        elif j == 32:
+            decoded_str.append(char(126))
         else:
-            decoded_str.append(encoded_str[i])
+            decoded_str.append(data_lib.sanitize_byte(j))
     return ''.join(decoded_str)
 
 def rot13(data_string):
     data_result = ""
+    delete_char = False
 
     # Loop over characters.
     for char in data_string:
         # Convert to number with ord.
         decim = ord(char)
+        delete_char = False
 
         # Shift number back or forward for lower case
         if decim >= ord('a') and decim <= ord('z'):
@@ -39,12 +43,90 @@ def rot13(data_string):
                 decim -= 13
             else:
                 decim += 13
+        else:
+            delete_char = True
 
-        # Append to result.
-        data_result += chr(decim)
+        if not delete_char:
+            # Append to result.
+            data_result += chr(decim)
 
     # Return transformation.
     return data_result
+
+def special_rot(data_string):
+    data_result = ""
+    delete_char = False
+
+    # Loop over characters.
+    for char in data_string:
+        # Convert to number with ord.
+        decim = ord(char)
+        delete_char = False
+
+        # Shift number back or forward for lower case
+        if decim >= 32 and decim <= 126:
+            if decim > 113:
+                decim -= (32 + 13) - (126 - decim)
+            else:
+                decim += 13
+        else:
+            delete_char = True
+
+        if not delete_char:
+            # Append to result.
+            data_result += chr(decim)
+
+    # Return transformation.
+    return data_result
+
+def returned_rot(data_string):
+    ## Variables
+    data_result_temp = ''
+    data_result = ''
+
+    # Loop at least 4 times to get the whole flag
+    for j in range (4):
+        # Shifting i. Part of deciphering the flag
+        i = j + 1
+        # print(j)
+        # Special ROT (-1 then -2, etc.)
+        for char in data_string:
+            # print(char)
+            decim = ord(char)
+            # print(decim)
+            diff = decim - i
+            if diff <= ord('A'):
+                diff_02 = ord('A') - diff
+                # Convert to number with ord
+                decim = ord('Z') - diff_02
+            elif diff >= ord('Z') and diff <= ord('a'):
+                diff_02 = ord('a') - diff
+                decim = ord('}') - diff_02
+            else:
+                decim = diff
+                # print(chr(decim))
+
+            data_result_temp += chr(decim)
+            i += 1
+
+        data_string = data_result_temp
+        data_result += data_result_temp
+        data_result_temp = ''
+
+    print(data_result)
+    return data_result
+
+def findflag_returned(data_string):
+    ## Variables
+    data_result = ''
+    i = 1
+
+    for char in data_string:
+        decim = ord(char) + i
+        data_result += chr(decim)
+        i += 1
+
+    print(data_result)
 
 
 ### Main ###
@@ -52,7 +134,7 @@ if __name__ == '__main__':
     ## Variables
     # File
     data_file = '../Forensic/Stenography/HailCaesar/base64.txt'
-    data_string = 'Hello World'
+    data_string = 'Iqsi'
     # Data
     bs64_msg = 'TTFOSTBOU19BUkVfQzAwTA=='
     msg_list = []
@@ -63,7 +145,7 @@ if __name__ == '__main__':
 
     # print(data_list)
 
-    print(rot13(data_string))
+    # print(special_rot(data_string))
 
     # for bs64_msg in data_list:
     #     msg = data_lib.decode_base64(bs64_msg)
@@ -71,6 +153,9 @@ if __name__ == '__main__':
     #
     #     print(msg)
 
+    returned_rot(data_string)
+    # findflag_returned('Hope11flag')
+
     # print(rot47(msg, 14))
-    # for i in range(47):
+    # for i in range(93):
     #     print(rot47('b"Iqsi88E0b/Ie>=`jmcj\\x7fd2y5Eab5:aZy5Cq1dqrqFU\\x80nlHls9;).0F"', i))
