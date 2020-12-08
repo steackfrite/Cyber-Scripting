@@ -83,11 +83,12 @@ def returned_rot(data_string):
     ## Variables
     data_result_temp = ''
     data_result = ''
+    i = 1
 
     # Loop at least 4 times to get the whole flag
-    for j in range (4):
+    for j in range (2):
         # Shifting i. Part of deciphering the flag
-        i = j + 1
+        # i = j + 1
         # print(j)
         # Special ROT (-1 then -2, etc.)
         for char in data_string:
@@ -99,16 +100,30 @@ def returned_rot(data_string):
                 diff_02 = ord('A') - diff
                 # Convert to number with ord
                 decim = ord('Z') - diff_02
+                if decim == ord('E') or decim == ord('U') or decim == ord('R') or decim == ord('O'):
+                    decim -= 1
+
             elif diff >= ord('Z') and diff <= ord('a'):
                 diff_02 = ord('a') - diff
                 decim = ord('}') - diff_02
+                if decim == ord('e') or decim == ord('u') or decim == ord('r') or decim == ord('o'):
+                    # print(decim)
+                    decim -= 1
             else:
-                decim = diff
+                if decim == ord('e') or decim == ord('u') or decim == ord('r') or decim == ord('o'):
+                    # print(chr(decim))
+                    decim = diff - 1
+                    # print(chr(decim))
+                elif decim == ord('E') or decim == ord('U') or decim == ord('R') or decim == ord('O'):
+                    decim = diff - 1
+                else:
+                    print(chr(decim))
+                    decim = diff
                 # print(chr(decim))
 
             data_result_temp += chr(decim)
             i += 1
-
+            # print(data_result_temp)
         data_string = data_result_temp
         data_result += data_result_temp
         data_result_temp = ''
@@ -153,8 +168,9 @@ if __name__ == '__main__':
     #
     #     print(msg)
 
-    returned_rot(data_string)
-    # findflag_returned('Hope11flag')
+    # returned_rot('jmcj')
+    returned_rot('Iqsi')
+    # findflag_returned('flag')
 
     # print(rot47(msg, 14))
     # for i in range(93):

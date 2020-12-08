@@ -112,6 +112,7 @@ if __name__ == '__main__':
     # ciph = 'Q1RGbGVhcm57eG9yX2lzX3lvdXJfZnJpZW5kfQo='
     # cipher = '54454545c8504d54454552454f4941454d4d4d5645'
     cipher = '9a6b5a487840b0af692cc7a9c850e5dfb5135d04f408c96d664efee0a69ad6cbe8e6fa9be89b9ccd4a901852588b2718'
+    cipher_list = []
     base64_ciphertext = 'h2riEIj13iAp29VUPmB+TadtZppdw3AuO7JRiDyU'
     plaintext_key = 'Gandalf'
     base64_list = ['xD6kfO2UrE5SnLQ6WgESK4kvD/Y/rDJPXNU45k/p', 'h2riEIj13iAp29VUPmB+TadtZppdw3AuO7JRiDyU', 'h2riEIj13iAp29VUPmB+TadtZppdw3AuO7JRiDyU']
@@ -129,7 +130,13 @@ if __name__ == '__main__':
     #
     #     print(str(index_key) + ': ' + key)
 
-    print(text_byte_xor('B/<V5;)j}j6\\<Y)8><\\9Fbu,Hy4ONC}pxP"4st12wn`?@O$6BgQo7i#gtD|s>3lf=', 126))
+    # for i in range(130):
+    #     print(str(i) + ': ' + text_byte_xor('"!&+7/&)4)!"0A149;>>>%.DIC<H7=>;', i))
+
+
+    # Convert hex string cipher to bytes
+    # ba1 = bytes.fromhex(data)
+    # file_lib.write_byte_file('../../Security/Challenges/CTFlearn/Forensic/Stenography/The-Keymaker/flag.enc', ba1)
 
 
 
